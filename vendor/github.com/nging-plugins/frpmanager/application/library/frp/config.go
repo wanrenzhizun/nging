@@ -134,6 +134,10 @@ func ProxyConfigFromForm(prefix string, data url.Values) (visitor echo.H, proxy 
 			LocalSvrConf:         localC,
 			HealthCheckConf:      healthCheckC,
 		}
+		pluginParamsMy := m.Value(`plugin_params`)
+        if len(pluginParamsMy) > 0 {
+        	baseC.PluginParams = ParseMetas(pluginParamsMy)
+        }
 		if pluginParams := m.Get(`plugin_params`); pluginParams != nil {
 			for kk, vv := range pluginParams.Map {
 				baseC.LocalSvrConf.PluginParams[kk] = vv.Value()
